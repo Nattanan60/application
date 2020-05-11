@@ -186,6 +186,21 @@ class _HomePageState extends State<HomePage> {
             ),
              Container(
               margin: EdgeInsets.fromLTRB(110, 5, 5, 5),
+              child: OutlineButton(
+              splashColor: Colors.blue[50],
+              borderSide: BorderSide(color: Colors.blue[300], width: 0, ),
+              padding: EdgeInsets.fromLTRB(10, 150, 10, 0),
+              onPressed: (){
+                var rount = MaterialPageRoute(builder: (BuildContext contex) => Help()
+                );
+                Navigator.of(context).push(rount);
+                  
+              },
+              child: Text("สแกน QR CODE",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700 ,  fontSize: 18, backgroundColor: Colors.black38),
+              ),
+              ),
               height:180,
               width: 180,
               decoration: BoxDecoration(
@@ -197,10 +212,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               alignment: Alignment(0, 0.98),
-              child: Text("สแกน QR CODE",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700 ,  fontSize: 18, backgroundColor: Colors.black38),
-              ),
+              
             ),  
         ],
         
