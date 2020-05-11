@@ -128,7 +128,7 @@ class _LoginState extends State<Apphome> {
         borderSide: BorderSide(
             color: Colors.blue, width: 1.0, style: BorderStyle.solid),
         child: Text(
-          'Login',
+          'Login'
         ),
       ),
     );

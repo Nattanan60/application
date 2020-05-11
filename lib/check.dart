@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:app/main2.dart';
 
+
 class Main3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,33 @@ class Check extends StatefulWidget {
 class _CheckState extends State<Check> {
   List<Model> models = List();
 
+
   void initState() {
     super.initState();
     readAllData();
   }
+  
 
-  Future<void> readAllData() async {
+  Future<void> insertValueToFireStore() async {
+    Firestore firestore = Firestore.instance;
+  
+    Map<String, dynamic> map = Map();
+    map['Parking'] = buttonplus;
+    await firestore
+        .collection('Parking')
+        .document('EP9t1HolJbmnHyt6jAsL')
+        .updateData({
+              'A1':'1'
+            })
+       .then((result){
+              print("new number true");
+            })
+        .catchError((onError){
+             print("onError");
+            });
+              
+  }
+ Future<void> readAllData() async {
     Firestore firestore = Firestore.instance;
     CollectionReference collectionReference = firestore.collection('Parking');
     await collectionReference.snapshots().listen((response) {
@@ -58,9 +80,26 @@ class _CheckState extends State<Check> {
       }
     });
   }
+Widget buttonplus(int index){
+  return Row(
+    children: <Widget>[
+        Container(
+          child: RaisedButton(
+              color: Colors.lightBlueAccent,
+              onPressed: () {
+                insertValueToFireStore();
 
+              },
+          child:Text('+1'),
+    
+  )
+  )
+  ]
+  );
+
+}
   Widget showParking(int index) {
-    return Text(models[index].a1,
+    return Text('A1:'+models[index].a1,
       style: TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
@@ -69,7 +108,7 @@ class _CheckState extends State<Check> {
   }
 
   Widget showParking2(int index) {
-    return Text(models[index].a2,
+    return Text('A2:'+models[index].a2,
       style: TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
@@ -78,7 +117,7 @@ class _CheckState extends State<Check> {
   }
 
   Widget showParking3(int index) {
-    return Text(models[index].a3,
+    return Text('A3:'+models[index].a3,
       style: TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
@@ -87,7 +126,7 @@ class _CheckState extends State<Check> {
   }
 
   Widget showParking4(int index) {
-    return Text(models[index].a4,
+    return Text('A4:'+models[index].a4,
       style: TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
@@ -96,7 +135,7 @@ class _CheckState extends State<Check> {
   }
 
   Widget showParking5(int index) {
-    return Text(models[index].a5,
+    return Text('A5:'+models[index].a5,
     style: TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
@@ -107,7 +146,7 @@ class _CheckState extends State<Check> {
   Widget showImage(int index) {
     return Container(padding: EdgeInsets.all(20.0),
       width: MediaQuery.of(context).size.width * 1.0,
-      height: MediaQuery.of(context).size.width * 1.0,
+      height: 350,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
@@ -122,9 +161,9 @@ class _CheckState extends State<Check> {
 
   Widget showText(int index) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.5,
-      height: MediaQuery.of(context).size.width * 0.5,
-      child: Column(
+      width: 250,
+      height: 100,
+      child: Row(       
         children: <Widget>[
           showParking(index),
           showParking2(index),
@@ -142,10 +181,9 @@ class _CheckState extends State<Check> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            // return Row(
-            //   children: <Widget>[
             showImage(index),
             showText(index),
+            buttonplus(index),
           ],
         ),
       ),

@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(25),
               color:Colors.grey[300],
               image: DecorationImage(
-                image: NetworkImage('https://image.flaticon.com/icons/png/512/579/579359.png',scale: 4)
+              image: NetworkImage('https://image.flaticon.com/icons/png/512/579/579359.png',scale: 4)
                 
                 ),
               ),

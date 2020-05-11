@@ -43,7 +43,7 @@ class _ImageReportState extends State<ImageReport> {
                 Icons.cloud_upload,
                 color: Colors.white,
               ),
-              label: Text('Upload Images And Send Report Data')),
+              label: Text('ส่งรายงานผู้ที่กระทำความผิด')),
         ),
       ],
     );
@@ -101,28 +101,28 @@ class _ImageReportState extends State<ImageReport> {
 
   Widget licenseForm() {
     return Container(
-        width: MediaQuery.of(context).size.width * 0.6,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: TextField(
           onChanged: (String string) {
             license = string.trim();
           },
           decoration: InputDecoration(
-              helperText: 'Type Your License Plate',
-              labelText: 'License Plate',
+              helperText: 'กรุณากรอกหมายเลขป้ายทะเบียนรถมอเตอร์ไซค์',
+              labelText: 'หมายเลขป้ายทะเบียนรถมอเตอร์ไซค์',
               icon: Icon(Icons.motorcycle)),
         ));
   }
 
   Widget messageForm() {
     return Container(
-        width: MediaQuery.of(context).size.width * 0.6,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: TextField(
           onChanged: (String string) {
             message = string.trim();
           },
           decoration: InputDecoration(
-              helperText: 'Type Your Message Report',
-              labelText: 'Message Report',
+              helperText: 'กรุณากรอกข้อความรายงาน',
+              labelText: 'ข้อความรายงาน',
               icon: Icon(Icons.message)),
         ));
   }
@@ -198,7 +198,7 @@ class _ImageReportState extends State<ImageReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ImagerReport'),
+        title: Text('รายงาน'),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 50, 0, 0),

@@ -64,7 +64,7 @@ class _NeedHelpState extends State<NeedHelp> {
                 Icons.cloud_upload,
                 color: Colors.white,
               ),
-              label: Text('Upload Help Message Data')),
+              label: Text('ส่งข้อความขอความช่วยเหลือ')),
         ),
       ],
     );
@@ -114,8 +114,8 @@ class _NeedHelpState extends State<NeedHelp> {
             message = string.trim();
           },
           decoration: InputDecoration(
-              helperText: 'Type Your Help Message',
-              labelText: 'Help Message',
+              helperText: 'กรุณากรอกข้อความขอความช่วยเหลือ',
+              labelText: 'ข้อความขอความช่วยเหลือ',
               icon: Icon(Icons.message)),
         ));
   }
@@ -173,7 +173,7 @@ class _NeedHelpState extends State<NeedHelp> {
         },
         ), 
         
-        title: Text('Help'),
+        title: Text('ขอความช่วยเหลือ'),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
