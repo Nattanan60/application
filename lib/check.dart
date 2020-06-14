@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app/model/model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,7 +41,8 @@ class _CheckState extends State<Check> {
     super.initState();
     readAllData();
   }
-  
+
+ 
 
   Future<void> insertValueToFireStore() async {
     Firestore firestore = Firestore.instance;
@@ -50,7 +53,7 @@ class _CheckState extends State<Check> {
         .collection('Parking')
         .document('EP9t1HolJbmnHyt6jAsL')
         .updateData({
-              'A1':'1'
+              'A1':''
             })
        .then((result){
               print("new number true");
@@ -88,6 +91,7 @@ Widget buttonplus(int index){
               color: Colors.lightBlueAccent,
               onPressed: () {
                 insertValueToFireStore();
+
 
               },
           child:Text('+1'),

@@ -1,4 +1,5 @@
 
+import 'package:app/addimage2.dart';
 import 'package:app/checkhelp.dart';
 import 'package:app/checkreport.dart';
 import 'package:app/report.dart';
@@ -60,7 +61,7 @@ class MainPage extends StatelessWidget {
                 splashColor: Colors.deepPurple[100],
                 borderSide: BorderSide(color: Colors.deepPurple[100], width: 0, ),
                 onPressed: (){
-                 var rount = MaterialPageRoute(builder: (BuildContext contex) =>Checkreport()
+                 var rount = MaterialPageRoute(builder: (BuildContext contex) =>ImageAdd2()
                   );
                   Navigator.of(context).push(rount);
                   

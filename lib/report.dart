@@ -1,3 +1,4 @@
+import 'package:app/addImgae.dart';
 import 'package:app/alert1.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                 borderSide: BorderSide(color: Colors.deepPurple[100], width:0, ),
                 padding: EdgeInsets.fromLTRB(30, 150, 30, 0),
                 onPressed: (){
-                 var rount = MaterialPageRoute(builder: (BuildContext contex) =>Check()
+                 var rount = MaterialPageRoute(builder: (BuildContext contex) =>ImageAdd()
                   );
                   Navigator.of(context).push(rount);
                   

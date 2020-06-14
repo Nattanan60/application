@@ -1,5 +1,8 @@
 import 'package:app/imreport.dart';
+import 'package:app/scanqr.dart';
+import 'package:barcode_scan/platform_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app/alert.dart';
 import 'package:app/check.dart';
@@ -191,7 +194,7 @@ class _HomePageState extends State<HomePage> {
               borderSide: BorderSide(color: Colors.blue[300], width: 0, ),
               padding: EdgeInsets.fromLTRB(10, 150, 10, 0),
               onPressed: (){
-                var rount = MaterialPageRoute(builder: (BuildContext contex) => Help()
+                var rount = MaterialPageRoute(builder: (BuildContext contex) => ScanQR()
                 );
                 Navigator.of(context).push(rount);
                   

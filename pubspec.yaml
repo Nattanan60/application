@@ -31,7 +31,8 @@ dependencies:
   cloud_firestore: ^0.13.5
   extended_image: ^0.7.2
   firebase_messaging: ^6.0.13
-  # barcode_scan: ^3.0.0
+  barcode_scan: ^3.0.1
+
  
  
   

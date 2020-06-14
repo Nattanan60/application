@@ -1,44 +1,35 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:app/main2.dart';
-class Help extends StatefulWidget {
-  @override
-  _HelpState createState() {
-  return _HelpState();
-}
-}
-class _HelpState extends State<Help> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Help',
-      home: NeedHelp(),
-       theme: ThemeData(
-      
-      textTheme: GoogleFonts.k2dTextTheme(
-      Theme.of(context).textTheme,
-    ),
-      primarySwatch: Colors.yellow,
 
-      ),
-    );
-    
-  }
+class ImageAdd extends StatefulWidget {
+  @override
+  _ImageAddState createState() => _ImageAddState();
 }
 
-class NeedHelp extends StatefulWidget {
-  @override
-  _NeedHelpState createState() => _NeedHelpState();
-}
-
-class _NeedHelpState extends State<NeedHelp> {
+class _ImageAddState extends State<ImageAdd> {
   //File
   File file;
-  String  message;
+  String license, message, urlPicture;
+  bool n;
+  int _counter = 0;
+  final databaseReference = Firestore.instance;
+
+ Future<void> getData() async {
+  Firestore.instance.collection("Parking").getDocuments().then(
+    (doc) {
+          
+
+      Firestore.instance.collection("Parking").document(
+        doc.documents[0].documentID).updateData({'A1': doc.documents[0].data['A1']+1});
+});
+              
+  }
+
+
 
 //Method
   Widget uploadButton() {
@@ -50,46 +41,60 @@ class _NeedHelpState extends State<NeedHelp> {
           child: RaisedButton.icon(
               color: Colors.lightBlueAccent,
               onPressed: () {
+            
                 print('You Click Upload');
-               if (
-                    message == null ||
-                    message.isEmpty) {
-                  showAlert('Have Space', 'Please Fill Every Blank');
+                if (file == null) {
                 } else {
                   // Upload
-                     insertValueToFireStore();
+                  uploadPictureToStorage();
+                  getData();
+                 
+                  
                 }
               },
               icon: Icon(
                 Icons.cloud_upload,
                 color: Colors.white,
               ),
-              label: Text('ส่งข้อความขอความช่วยเหลือ')),
+              label: Text('กล้องตัวที่ 2 ส่งรูป')),
         ),
       ],
     );
   }
   
-
-  
-  Future<void> insertValueToFireStore() async {
+  Future<void> uploadPictureToStorage() async {
     Random random = Random();
     int i = random.nextInt(100000);
-    Firestore firestore = Firestore.instance;
-    
-    Map<String, dynamic> map = Map();
-    map['HelpMe'] = message;
-    DateTime.now();
 
+    FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+    StorageReference storageReference =
+        firebaseStorage.ref().child('License/license$i.jpg');
+    StorageUploadTask storageUploadTask = storageReference.putFile(file);
+
+    urlPicture =
+        await (await storageUploadTask.onComplete).ref.getDownloadURL();
+    print('urlPicture = $urlPicture');
+    insertValueToFireStore();
+
+  }
+
+  Future<void> insertValueToFireStore() async {
+    Firestore firestore = Firestore.instance;
+  
+   
+    Map<String, dynamic> map = Map();
+    map['timestamp'] = DateTime.now();
+    map['im'] = urlPicture;
+    map['license'] = message;
     await firestore
-        .collection('NeedHelp')
+        .collection('ImageParking')
         .document()
         .setData(map)
+        
         .then((value) {
           print('Insert Success');
         });
   }
-  
 
   Future<void> showAlert(String title, String messages) async {
     showDialog(
@@ -109,7 +114,7 @@ class _NeedHelpState extends State<NeedHelp> {
         });
   }
 
-  Widget messageForm() {
+Widget messageForm() {
     return Container(
         width: MediaQuery.of(context).size.width * 0.6,
         child: TextField(
@@ -117,12 +122,21 @@ class _NeedHelpState extends State<NeedHelp> {
             message = string.trim();
           },
           decoration: InputDecoration(
-              helperText: 'กรุณากรอกข้อความขอความช่วยเหลือ',
-              labelText: 'ข้อความขอความช่วยเหลือ',
-              icon: Icon(Icons.message)),
+              helperText: 'กรอกหมายเลขป้ายทะเบียน',
+              labelText: 'หมายเลขป้ายทะเบียน',
+              icon: Icon(Icons.motorcycle)),
         ));
   }
 
+  
+  Widget cameraButton() {
+    return IconButton(
+        icon:
+            Icon(Icons.add_a_photo, size: 40.0, color: Colors.lightBlueAccent),
+        onPressed: () {
+          chooseImage(ImageSource.camera);
+        });
+  }
 
   Future<void> chooseImage(ImageSource imageSource) async {
     try {
@@ -138,14 +152,34 @@ class _NeedHelpState extends State<NeedHelp> {
     } catch (e) {}
   }
 
+  Widget galleryButton() {
+    return IconButton(
+        icon: Icon(
+          Icons.add_photo_alternate,
+          size: 40.0,
+          color: Colors.lightBlueAccent,
+        ),
+        onPressed: () {
+          chooseImage(ImageSource.gallery);
+        });
+  }
+
+  Widget showButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        cameraButton(),
+        galleryButton(),
+      ],
+    );
+  }
 
   Widget showImage() {
     return Container(
       // color: Colors.grey,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.3,
-      child: file == null ? 
-      Image.asset('images/help.png') : Image.file(file),
+      child: file == null ? Image.asset('images/pick.png') : Image.file(file),
     );
   }
 
@@ -155,7 +189,8 @@ class _NeedHelpState extends State<NeedHelp> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           showImage(),
-          messageForm(),
+          showButton(),
+          messageForm()
         ],
       ),
     );
@@ -164,19 +199,7 @@ class _NeedHelpState extends State<NeedHelp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-        icon:Icon(Icons.navigate_before,
-        ),
-        
-       
-        onPressed:(){
-          var rount = MaterialPageRoute(builder: (BuildContext contex) =>Main()
-                  );
-                  Navigator.of(context).push(rount);
-        },
-        ), 
-        
-        title: Text('ขอความช่วยเหลือ'),
+        title: Text('กล้องตัวที่ 2'),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
