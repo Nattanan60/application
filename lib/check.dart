@@ -66,7 +66,7 @@ class _CheckState extends State<Check> {
  Future<void> readAllData() async {
     Firestore firestore = Firestore.instance;
     CollectionReference collectionReference = firestore.collection('Parking');
-    await collectionReference.snapshots().listen((response) {
+    collectionReference.snapshots().listen((response) {
       List<DocumentSnapshot> snapshots = response.documents;
       for (var snapshot in snapshots) {
         print('A1 = ${snapshot.data['A1']}');

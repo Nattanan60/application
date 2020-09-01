@@ -1,8 +1,8 @@
 class Model{
 
-  String a1, a2, a3, a4, a5, im;
+  String a1, a2, a3, a4, a5,im;
 
-  Model(this.a1, this.a2, this.a3, this.a4, this.a5,this.im);
+  Model(this.a1, this.a2, this.a3, this.a4, this.a5 ,this.im);
 
   Model.fromMap(Map<String, dynamic> map){
     a1 = map['A1'];
